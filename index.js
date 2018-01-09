@@ -9,7 +9,7 @@ var apis = {
 };
 
 //Replace this with your status page project name
-var githubProject = 'drcoms/drcom-generic';
+var githubProject = 'RoyalKingwlAcademyOfSciences/prostrate_at_kingwl';
 
 //Github URLs
 var issuesApiUrl = 'https://api.github.com/repos/'+githubProject+'/issues?limit=100&sort=created&direction=desc&state=all'
@@ -34,9 +34,6 @@ var markDownParser = function(str){
         output.push(e('p',{key : i, style: {'wordBreak': 'break-all', }},line))
     }
 
-    if (lines.length > 30) {
-        output.push(e('p',{key : i}, '------ 内容过长截断 ------'))
-    }
     return output;
 }
 
@@ -49,20 +46,11 @@ var IssuesList = React.createClass({
         else if (this.props.issues !== undefined){
             issueItems = this.props.issues.map(function(issue){
                 var found = false;
-                //issue.labels.map(function(label){
-                //    if (label.name === 'bug' || label.name === 'help wanted' || label.name === 'question')
-                //        found = true;
-                //})
-                //if (!found)
-                //    return;
-                if (issue.state == 'closed') {
-                    return;
-                }
                 var creationDate = new Date(issue.created_at);
                 var updateDate = new Date(issue.updated_at);
                 var closeDate = new Date(issue.closed_at);
                 var updateOrCloseDate = 'updated: '+updateDate.toLocaleString()
-                var className = 'panel-danger';
+                var className = 'panel-success';
                 if (issue.state == 'closed'){
                     className = 'panel-success'
                     updateOrCloseDate = 'resolved: '+updateDate.toLocaleString();
@@ -75,7 +63,7 @@ var IssuesList = React.createClass({
                     e('div',{key: 'body',className : 'panel-body'},
                         [
                         e('p',null,[e('span',{key : 'creationDate',className: ''},
-                                        'reported: '+ creationDate.toLocaleString()),
+                                        '时间: '+ creationDate.toLocaleString()),
                                     e('span',{key : 'updateDate',className: 'pull-right'},
                                         updateOrCloseDate)]),
                         e('hr',{className: 'hr'}),
@@ -91,7 +79,7 @@ var IssuesList = React.createClass({
                                 'No incidents found!')
         }
         return e('div',{key : 'issues',className : 'status-updates'},[
-            e('h2',{key : 'title'},['最新事件',
+            e('h2',{key : 'title'},['最新膜璐',
                                     e('a',{className : 'pull-right',href : '#',
                                             onClick : this.props.refreshIssues},
                                             e('i',{className : 'fa fa-refresh'+
@@ -100,7 +88,7 @@ var IssuesList = React.createClass({
             e('p',{key : 'link'},[
                 e('a',{'href' : issuesHtmlUrl},'查看所有'),
                 ' // ',
-                e('a',{'href' : newIssueUrl},'上报问题')
+                e('a',{'href' : newIssueUrl},'开始膜璐')
                 ]),
             issueItems,
             ])
@@ -207,7 +195,7 @@ var StatusList = React.createClass({
             e('h2',{},'Github API 可用性'),
             e('p',{},'注意: 这仅仅反应了你目前的网络到 Github APIs 的可达性.'),
             e('ul',{key : 'statuses',className : 'list-group'},items),
-            e('a',{'href' : newIssueUrl},'上报问题')
+            e('a',{'href' : newIssueUrl},'开始膜璐')
             ];
         return e('div',null,
             [
